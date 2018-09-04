@@ -1,0 +1,84 @@
+%Constraint Programming and Minizinc
+
+\xchapter{Constraint Satisfaction Problem}{ }
+
+\section{Constraint Programming}
+
+Constraint Programming is a declarative paradigm which combines techniques that deal with logical reasoning and computing, that can be used for solving Combinatorial Optimization Problems through Artificial Intelligence and Operational Research, whose the basic idea is to express the problem as logic constraints and solve then from a solver. A constraint satisfaction problem consists of a finite set of constraints, each on a subsequence of a given sequence of variables\cite{Krzysztof:2003}.
+
+%Informally, a constraint on a sequence of variables is a relation on their domains. A constraint satisfaction problem consists of a finite set of constraints, each on a subsequence of a given sequence of variables\cite{Krzysztof:2003}.
+
+To modeling a problem as constraint programming is needed formulate it as a constraint satisfaction problem, introduce variables with specific domains and constraints over these variables, lastly choose some language in which the constraints will be expressed\cite{Krzysztof:2003}. 
+
+The Constraint Programming has the following characteristics:
+\begin{itemize}
+\item Two phase approach: A generation of a problem representation by means of constraints and a solution for it;
+\item Flexibility: Possibility to add, remove and modify constraints
+\item Presence of Built-ins: Several built-in methods are available
+\end{itemize}
+
+To solve the problem we can use the domain-specific method, a general method or a combination of both. The domain-specific method is usually provided in the form of implementation special purpose algorithms, e.g. a program that solves systems of linear equations. The general method focuses on reducing the search space and with specific search methods\cite{Krzysztof:2003}.  
+
+%built-in =  incorporado
+
+The Constraint Programming has already been successfully applied in several domains, i.e.: interactive graphics systems, operations research problems, combinatorial optimization, molecular biology, business applications, electrical engineering, numerical computation, natural language processing and computer algebra. 
+
+\subsection{Basic Concepts}
+
+Be a sequence of variables $Y = \{ y_1, y_2, \dots, y_k \}$ where $k>0$, with respective domains  $\Omega = \{\Omega_1, \Omega_2, \dots, \Omega_n\}$ associated. A constraint $R$ on $Y$ is a subset $\Omega_1 \times \dots \times \Omega_n$. 
+
+A \acl{CSP} may be described as a finite sequence of variables $X = \{x_1, x_2, \dots, x_n\}$ with respective domains $D = \{\Omega_1, \Omega_2, \dots, \Omega_n\}$ and a finite set $R = \{ r_1, r_2, \dots, r_n \}$ of constraints.
+
+The \ac{CSP} is written as $(R~;~\Omega_\varepsilon)$, where $\Omega_\varepsilon = \{x_1 \in \Omega_1, x_2 \in \Omega_2, \dots, x_n \in \Omega_n \}$ and each construct the form $x \in \Omega$ is called a domain expression.
+
+A solution to a \ac{CSP} is a mapping of values to all domain variables such that all constraints are satisfied. 
+If a Constraint Satisfaction Problem has a solution, we say that it is consistent, otherwise, we say that is inconsistent\cite{Krzysztof:2003}.
+
+The constraints of \ac{CSP} may be classified as hard or soft: the hard constraints must be fulfilled and the soft constraints can be unsatisfied, however, for each soft constraint unsatisfied there is an associated weight, which increases the cost of solving the problem.
+
+From the analysis of the studied materials, was verified that the \ac{CSP} can be is an effective method to solve Combinatorial Optimization problems, like the  \ac{HHCRSP}, which has the following restrictions:
+\begin{itemize}
+\item All nurses start and end their work at the hospital;
+\item The workload must be defined in accordance with labor laws;
+\item The lunchtime must be respected;
+\item The patient should receive certain treatment only once a day by  professional with necessary qualification;
+\item The service must last the time provided on the scale of each professional;
+\item The beginning of each service must follow the time window;
+\item There is no activity on Saturdays and Sundays;
+\end{itemize}
+
+Exists several languages with use constraint programming paradigm, i.e. Minizinc and Prolog. And there are several solvers to solution Constrain Programming Problems, i.e. Gecode/FlatZinc, Chuffed, Choco, ECLiPSe, HaifaCSP, JaCoP, MinisatID,  Gurobi, etc.  
+In this work, the constraints to \ac{HHCRSP} were programming with Minizinc language and solved with Gurobi solver.
+
+\section{Minizinc}
+
+Minizinc is a logic programming language designed to specify constraint optimization and decision problems with uses easily different backend solvers, i.e. Gecode, Gurobi, Chocco, etc. 
+
+The MiniZinc library contains direct interfaces to other solvers, i.e. to COIN-OR CBC, Gurobi, IBM ILOG CPLEX. Furthermore, the following projects have developed FlatZinc interfaces:
+
+\begin{itemize}
+\item \textbf{Gecode/FlatZinc:} The generic constraint development environment provides a FlatZinc interface. The source code for the interface stripped of all Gecode-specific code is also available.
+\item \textbf{Chuffed:} A C++ FD solver using lazy clause generation.
+\item \textbf{Choco 3:} A Java FD solver.
+\item \textbf{ECLiPSe:} The ECLiPSe Constraint Programming System provides support for evaluating FlatZinc using ECLiPSe's constraint solvers. MiniZinc models can be embedded into ECLiPSe code in order to add user-defined search and I/O facilities to the models.
+\item \textbf{HaifaCSP:} A C++ FD solver using SAT solving algorithms.
+\item \textbf{JaCoP:} A Java-based constraint solver with an interface to FlatZinc (from version 4.2).
+\item \textbf{MinisatID:} An implementation of a search algorithm combining techniques from the fields of SAT, SAT Module Theories, Constraint Programming, and Answer Set Programming, has an interface to FlatZinc.
+\item \textbf{Mistral 2.0:} A C++ FD solver.
+\item \textbf{Opturion CPX:} A Constraint Programming solver with explanation system, has an interface to FlatZinc.
+\item \textbf{OR-Tools:} A set of Operations Research tools developed at Google.
+\item \textbf{OscaR/CBLS:} A FlatZinc interface to the Constraint-Based Local Search component of the OscaR toolkit.
+\item \textbf{Picat CP/SAT}.
+\item \textbf{SICStus Prolog:} Includes a library for evaluating FlatZinc (from version 4.0.5).
+\item \textbf{SCIP:} A framework for Constraint Integer Programming, has an interface to FlatZinc.
+\item \textbf{Yuck:} A local search solver with an interface to FlatZinc.
+\end{itemize}
+
+It solves the problem transforming an input MiniZinc model and data file into a FlatZinc model. FlatZinc models consist of variable declaration and constraint definitions as well as a definition of the objective function if the problem for an optimization problem. The translation from MiniZinc to FlatZinc is specialized to individual backed solvers, so they can control what form constraints end up in\cite{minizinc:2017}. 
+
+Minizinc uses the basic parameter types, i.e. integers(int), floating point numbers(float), Booleans(bool), strings (string), arrays and sets. Their models can also contain a kind of variable called decision variable, with are mathematical or logical unknown variable, this type of variable will be assigned by the Minizinc to a valid value only after its execution. For each decision variable, we need to give the set of possible values the variable can take, this is called the variable domain.     
+
+To program in Minizinc, we first declare the variables and after we describe the restrictions of a model, this is done by using the reserved word \textbf{constraint} followed by restriction. At the end of the program, the solution of the model is defined by the reserved word \textbf{solve} that can be combined with the word \textbf{maximize} or \textbf{minimize} depending on the objective function which will be programmed or only with the word \textbf{satisfy}, which returns results for non-optimization problems.
+
+Is allowed in Minizinc the creation of functions and predicates for simplification complex constraints, i.e. The Eulerian circuit that can be used with part of the solution of \ac{HHCRSP}.
+The predicates are used when is need model functions using pre-defined global functions in the language and the output is a Boolean type. Functions are used when you need capture common structures of models, also accepting as output the Boolean type.

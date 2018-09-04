@@ -1,0 +1,235 @@
+\xchapter{Routing and Scheduling Problem in Health}{ }
+
+\section{Nurse Scheduling Problem}
+
+The \ac{NSP} was defined by \citeonline{ioanis:2015} as an allocation process of a set of nurses to a set of shifts, considering a set of soft and hard constraints, described by \citeonline{Rahimian:2017} as follow:
+
+\begin{itemize}
+    \item Maximum one assignment per shift per day for each nurse;
+    \item The shifts for each day must be fulfilled;
+    \item Exists a minimum and maximum shift assignments within the scheduling period;
+    \item Minimum and maximum consecutive business days over the planning horizon;
+    \item Minimum and maximum working hours within the the programming period;
+    \item Minimum and maximum number of shift assignments within a week;
+    \item Minimum and maximum number of shift assignments within a weekend;
+    \item Minimum number of days off after a night shift or a series of night shifts;
+    \item During the weekends, there should be an assignment of each nurse for each day of the weekend;
+    \item Shouldn't assignments for the night shift before the weekends off
+    \item Maximum consecutive weekends worked;
+\end{itemize}    
+
+The \ac{NSP} was defined by \citeonline{Rahimian:2017} as a set of nurses $E = \{e_1, e_2, \ldots, e_{|E|}\}$, a set of tasks $D = \{d_1, d_2, \ldots, d_{|D|}\}$ and a set of shifts $B$ whose each element is mapping as follow: ($M$, morning), ($E$, evening), ($N$, night) e ($-$, day off). A solution for \ac{NSP} can be represented by a matrix $M_{|E|\times |D|}$, en which each cell $m_{e_i,d_j} \in M$ has a assignment for the shift $t\in B$ which must be fulfilled for the nurse $e_i$ in the day $d_j$.
+
+The table~\ref{enfermeira_dia} introduce a example of nurse scheduling whose values $n_1$, $n_2$ e $n_3$ represents the nurses who was scheduling in seven days work, represented by $d_1$, $d_2$, $d_3$,$d_4$, $d_5$, $d_6$, $d_7$.     
+
+\begin{table}[ht]
+ \centering
+\caption{Scheduling of three nurses in seven days work\label{enfermeira_dia}}
+\begin{tabular}{r|l|l|l|l|l|l|l}
+         & $d_1$ & $d_2$ & $d_3$ & $d_4$ & $d_5$ & $d_6$ & $d_7$ \\ \hline
+ $e_1$ & $M$  & $V$  & $N$  & $M$  & $V$  & $V$  & $-$ \\ \hline
+ $e_2$ & $V$  & $-$  & $M$  & $N$  & $N$  & $-$  & $V$\\ \hline
+ $e_3$ & $M$  & $M$  & $V$  & $N$  & $-$  & $M$  & $V$
+\end{tabular}
+\end{table}
+
+The \ac{NSP} was mathematically defined by \citeonline{Rahimian:2017} as follow:
+
+Be the following parameters
+
+
+\textbf{$E$} a set of nurses; \\
+\textbf{$D$ } a set of days; \\
+\textbf{$B$} a set of  shift types; \\
+\textbf{$B'$} a set of shift types except day off; \\
+\textbf{$W$} a set of days of weeks; \\
+\textbf{$H_a$} a set of shifts which cannot be assigned immediately after shift type $a \in A$ \\
+\textbf{$Q_{ad}$} a set of pre-assigned nurses to shift types $a \in A$ on day $d \in D$; \\
+\textbf{$M_e^{min}$, $M_e^{max}$} the minimum and maximum number of shifts that can be assigned to nurse $e \in E$ within the panning period; \\
+\textbf{$W_w^{min}$, $W_w^{max}$} the minimum and maximum number of shifts that can be assigned to a nurse $e \in E$ within week $w \in W$; \\
+\textbf{$V_d^{min}$, $V_d^{max}$} the minimum and maximum number of shifts that can be assigned to nurses on day $d \in D$;\\
+\textbf{$A^{min}$, $A^{max}$} Minimum and maximum number of hours that can  be assigned to each nurse during the planning period; \\
+\textbf{$E_w^{min}$, $E_w^{min}$ }Minimum and maximum number of hours that can  be assigned to each nurse during week $w \in W$; \\
+\textbf{$N^{min}$, $N^{max}$} Minimum and maximum number of consecutive  working days over the planning period; \\
+\textbf{$H_a^{min}$, $H_a^{max}$} Minimum and maximum number of consecutive shift  type $a \in A$ over the planning period; \\
+\textbf{$K^{min}$, $K^{max}$} Minimum and maximum number of worked  weekends over the planning horizon; \\
+\textbf{$C^{max}$} Maximum number of consecutive worked weekends  over the planning period; \\
+\textbf{$U_{aw}$} Total workloads (hours) of shift type $a \in A$ within the  planning period\\
+\textbf{$U_{aw}$} Total workloads (hours) of shift type $a \in A$ during a week $w \in W$\\
+\textbf{$B_{ew}^{wa}$} The associated weight with the minimum and  maximum number of shift assignments for nurse $e \in E$ within week $w \in W$; \\
+\textbf{$B_{ew}^{cwx}$} The associated weight with the maximum and  maximum number of shift assignments for nurse $e \in E$ within week $w \in W$; \\
+\textbf{$B_{ead}^{rso}$} The associated weight with requested shift $a \in A$ within day $d \in D$ for nurse $e \in E$;\\
+
+
+The following decision variables:
+
+$$%\begin{equation}
+x_{ead} = 
+ \left \{
+ \begin{array}{cc}
+    1, & \mbox{if shift type $a \in A$ on day $d \in D$ is assigned to nurse $e \in E$} \\
+    0, & \mbox{Otherwise} \\
+ \end{array}
+ \right.
+$$% \end{equation}
+
+$$%\begin{equation}
+p_{ed} = 
+ \left \{
+ \begin{array}{cc}
+    1, & \mbox{if the nurse $e \in E$ works on day $d \in D$} \\
+    0, & \mbox{otherwise} \\
+ \end{array}
+ \right.
+$$%\end{equation}
+ 
+$$%\begin{equation}
+k_{ew} = 
+ \left \{
+ \begin{array}{cc}
+    1, & \mbox{if the nurse $e \in E$ is assigned to the weekend $w \in W$} \\
+    0, & \mbox{otherwise} \\
+ \end{array}
+ \right.
+$$\\%\end{equation} 
+
+\textbf{$y_{ea}$} Total number of times that shift type $a \in A$ is assigned to nurse $e \in E$ over the planning period; \\
+\textbf{$z_{ewa}$} Total number of shift type $a \in A$ assigned to nurse $e \in E$ during week $w \in W$; \\
+\textbf{$v_{ew}^{wam}$, $v_{ew}^{wax}$} Total incurred penalty relevant to the minimum and maximum number of shift assignments for nurse $e \in E$ within week $w \in W$ 
+\textbf{$v_{ew}^{cwx}$} Total incurred penalty relevant to maximum number of consecutive weekends for nurse $e \in E$ within a week $w \in W$; \\
+\textbf{$v_{ead}^{rso}$} Total incurred penalty relevant to request shift $a \in A$ in day $d \in D$ for nurse $e \in E$; \\
+
+
+The following constraints:
+
+\begin{equation} \label{um}
+\sum_{a \in A} x_{ead} = 1
+\end{equation}
+
+\begin{equation}\label{dois}
+ \left \{
+\begin{matrix}
+p_{ed} = \sum_{a \in A'} x_{ead}, & \forall e \in E, d \in D \\
+
+v_d^{min} \leq v_d^{max}, & \forall d \in D \\
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{tresa}
+ \left \{
+\begin{matrix}
+y_{ea} = \sum_{d \in D} x_{ead}, & \forall e \in E, a \in A \\
+
+M_e^{min} \leq sum_{a \in A} y_{ea} \leq M_e^{max}, & \forall e \in E\\
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{tresb}
+ \left \{
+\begin{matrix}
+\sum_{i=1}^{N^{min}-1} P_{e(d_i)} \leq P_{ed} + P_{e(d+N^{min})}, & \forall e \in E, d \in \{ 1 ... |D|-N^{min} \} + N^{min}-2, \\
+
+\sum_{g=d}^{N^{max}+d} P_{eg} \leq N^{max}, & \forall e \in E, d \in \{ 1 ... |D|-N^{max} \},\\
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{tresc}
+ \left \{
+\begin{matrix}
+
+A^{min} \leq \sum_{a \in A} y_{ea}U_a \leq A^{max}, & \forall e \in E, d \in \{ 1 ... |D|-N^{min} \} + N^{min}-2, \\
+
+z_{ewa} = \sum_{d=7(w-1)+1}^{7w} x_{ead}, & \forall e \in E, a \in A, w \in W,\\
+
+E_w^{min} \leq \sum_{a \in A} z_{ewa} \leq W_w^{max}, & \forall e \in E, w \in W \\
+
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{tresd}
+W_w^{min} - v_{ew}^{wam} \leq \sum_{a \in A} z_{ewa} \leq W_w^{max} + v_{ew}^{wax}, \forall e \in E, w \in W
+\end{equation}
+
+\begin{equation}\label{trese}
+ \left \{
+\begin{matrix}
+
+k_{ew} \leq P_e(7w-1) + P_e(7w) \leq 2k_{ew}, \forall e \in E, w \in W \\
+
+k^{min} \leq \sum_{w \in W} k_{ew} \leq K^{max}, & \forall e \in E,\\
+
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{tresf}
+ \left \{
+\begin{matrix}
+
+\sum_{i=1}^{H_a^{min}-1} x_{ea(d+i)} \leq x_{ead}, \forall e \in E, a \in A, d \in \{ 1...|D|-H_a^{min} \} + x_{ea(d+H_a^{min})} - 2. \\
+
+\sum_{g=d}^{H_a^{max}=d} x_{eag} \leq H_a^{max}, \forall e \in E, a \in A, d \in \{1...|D|-H_a^{max} \}. \\
+
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{quatro}
+ \left \{
+\begin{matrix}
+
+x_{end} \leq x_{end+1} + 1 - P_e(d+1), \forall e \in E, d \in \{ 1...|D|- 1 \} \\
+
+x_{end} - P_e(d+1) \leq 1 - P_e(d+2), \forall e \in E, d \in \{ 1...|D|- 2 \} \\
+
+\end{matrix}
+\right.
+\end{equation}
+
+\begin{equation}\label{cinco}
+x_{er(7w-1)} = x_{er(7w)}, \forall e \in E, w \in W
+\end{equation}
+
+\begin{equation}\label{seis}
+x_{en(7w-1)} \leq P_{e(7w-1)} + P_{e(7w)}, \forall e \in E, w \in W
+\end{equation}
+
+\begin{equation}\label{sete}
+\sum_{i=0}^{c^{max}} \leq C^{max} + v_{ew}^{cwx}, \forall e \in E, w \in \{1...|W| - C^{max}\}
+\end{equation}
+
+\begin{equation}\label{oito}
+x_{ead} = 1 - v_{ead}^{rso}, \forall e \in Q_{ad}, a \in A, d \in D
+\end{equation}
+
+\begin{equation}\label{nove}
+x_{ead} + x_{eh}(d+1) \leq 1, \forall e \in E, a \in A, h \in H_a, d \in \{1...|D|-1\}
+\end{equation}
+
+$$x_{ead}, P_{ed}, k_{ew} \in {0,1}, y_{ea}, z_{ewa} \in \mathds{Z}, \quad \forall e \in E, \in A, d \in D, w \in W $$
+
+And the following Objective Function:
+
+$$ min \sum_{e \in E} \sum_{w \in W} (B_{ew}^{wa}(v_{ew}^{wam}+ v_{ew}^{wax})+B_{ew}^{cwx}v_{ew}^{cwx}) + \sum_{e \in Q_{ad}} \sum_{a \in A} \sum_{d \in D}(B_{ead}^{rso}v_{end}^{rso}) $$
+
+
+In constraint~\ref{tresb}, take into account the number of consecutive working days below the minimum, account all sequences individually up to the minimum; the constraint~\ref{tresf} account only which sequences of a particular shift; the constraint~\ref{quatro} is assumed two days off after a night shift or a series of night shifts; the constraints~\ref{dois},~\ref{quatro},~\ref{cinco}~and~\ref{seis}, $n$ e $r$ indicate night and rest shift types, respectively. The objective function is to minimize the weight associated with the workload to each nurse.
+
+\section{Home Health Care Routing Scheduling Problem}
+
+The \ac{HHCRSP} is a Combinatorial Optimization Problem which integrates Traveling Salesman Problem and Staff Scheduling Problem, conform contractual rules, customers and staff preferences, 
+whose aim to develop a work scheduling for the Home Care service whose each care worker visits a set of patients, have a lunchtime and finishes their planned activities within a predefined working time window. 
+
+The \ac{HHCRSP} was defined by \citeonline{rasmussenm:2012} as a set of care workers $E~=~\{ e_1, e_2, \ldots, e_{|E|} \}$ which each care worker~$e\in E$ has a workload $CH_e$. A set of customers $P = \{p_1, p_2, \ldots, p_{|P|} \}$ whose request. A set of  services $S = \{ s_1, s_2, \ldots, s_{|S|} \}$ and the distance matrix $D_{|P|\times |P|}$.
+
+
+Be $\Delta$ a ordered pairs set  of time instant whose each element $[i_p, f_p] \in \Delta$ is a time window. The time instant $i_{p}$ represents the lower bound and the time instant $f_{p}$ represents the upper bound to begin a care of patient $p$. The function $f: S \rightarrow \Delta$ maps each service to time window 
+ of patient treatment. Each visit must occur within a time window $[i_{p},f_{p}]$ and each service $s \in S$ provided by a care worker $e$ to patient $p$ have a maximum duration defined by $t_s$.
+ 
+The \ac{HHCRSP} has a relevant social and economic importance, being a viable option to hospitalization for stable patients that need medical treatment. That service contributes with the reducing the risk of hospital-acquired infection and provide more comfort for the patient, in other hands, the costs to the home manager and costs related to the displacement of the vehicles in charge of transporting the service teams is increased. 
+
+Nowadays the \ac{HHCRSP} has been solved manually in several countries, for that reason, several researchers have been investigating combinatorial optimization techniques to obtain better solutions, aiming mainly to achieve the following objectives: Minimizing workload to home care workers, maximizing the satisfaction of patients and minimize the distance traveled.

@@ -1,0 +1,123 @@
+\xchapter{Routing Scheduling Problems}{ }
+
+\section{Staff Scheduling Problem}
+
+The Staff Scheduling Problem is an assignment problem whose set of tasks or shifts is associated with a set of people according to their abilities so that the organization can satisfy the demand for its goods or services respecting the work restrictions and preference of the staff members.
+
+According to \citeonline{sier:2004} is difficult to determine optimal solutions that minimize costs, meet employee preferences, distribute shifts equitably among employees and satisfy all the workplace constraints.
+
+The Staff Scheduling Problem has a set of soft and hard constraints, in which the hard constraints can't be violated and a penalty function $f_r$ is associated to each soft constraints $r$. If the soft constraint is perfectly compiled, the penalty function $f_r = 0$, otherwise, $f_r$ increase according to number of violations \cite{blochiger:2003}.
+
+The Staff Scheduling Problem was defined by \citeonline{blochiger:2003} as follow:
+
+Be $S = \{s_1,s_ 2, \ldots, s_{|S|}\}$ a set of staff members and $T = \{t_1, t_2, \ldots, t_{|T|}\}$ a set of tasks. A solution of the Staff Scheduling Problem can be represented by a matrix $M$, in which each cell $m_{t_is_j}$ contains the value referring to assignment of task $t_i \in T$ to staff member $s_j \in S$. as in Table~\ref{time_table_block}
+
+\begin{table}[h]
+\centering
+\caption{Example of allocation to a set of tasks to a set of staff members. \label{time_table_block}} 
+\begin{tabular}{r|l|l|l|l}
+      & $s_1$ & $s_1$ & $s_3$ & $s_4$ \\ \hline
+$t_1$ & $0$   & $0$   & $1$   & $0$  \\ \hline
+$t_2$ & $1$   & $0$   & $0$   & $0$  \\ \hline
+$t_3$ & $0$   & $0$   & $0$   & $1$  \\ \hline
+$t_4$ & $0$   & $1$   & $0$   & $0$ 
+\end{tabular}
+\end{table}
+
+
+\section{Traveling Salesman Problem}
+
+The \ac{TSP} is a Combinatorial Optimization Problem whose given a set of locals and the distances between each local, the problem has as objective find a minimum path who visit each city exactly once \citeonline{goyal:2010}.
+
+\citeonline{laporte:1992} defined the \ac{TSP} as a graph $G = (V,A)$ in which $V$ is a set of vertices, $A$ is a set of arcs and $\tau:V\times V \rightarrow \mathds{R}$  a function who associate each pair of vertices to distance.  
+
+The  \ac{TSP} was defined mathematically by \citeonline{laporte:1992} as follow:
+
+\begin{equation}\label{objectiveFunction}
+\mbox{minimize} \sum{c_{ij}x_{ij}}
+\end{equation}
+
+subject to: \\
+
+\begin{equation}\label{degreeConstraints}
+ \sum{x_{ij}} = 1, i = \{1, \ldots, n\}, j = \{1, \ldots, n\}
+\end{equation}
+
+\begin{equation}\label{eliminationConstraints}
+ \sum{x_{ij}} \leqslant S - 1, S \subset V, 2 \leqslant S \leqslant n - 2
+\end{equation}
+
+\begin{equation}
+x_{ij} \in {0,1},
+i,j = 1, \ldots, n, 
+i \neq j
+\end{equation}
+
+Where
+
+$x_{ij}$ Is a decision variable equal to 1 if the arc (i,j) is used in solution,
+The equation~\ref{objectiveFunction} is an objective function that describes the minimum path,
+the constraint~\ref{degreeConstraints} specify that every vertex is visited exactly once and
+the constraint~\ref{eliminationConstraints} prohibit the formation of loops.
+
+Several variations of the \ac{TSP} have been studied. In this work will be described the \ac{MTSP} and the \ac{TSPTW}. 
+
+The \acl{MTSP} is a generalization of the \ac{TSP} in which it considers a set of staff members and aims to determine for each staff member, a minimum cost route in which each city should be visited once by a single staff member~\cite{meng:2012}.
+
+In the \acl{TSPTW}, a client is assigned a time window in which the upper and lower limit is defined for the beginning of an activity and aims to find a minimum cost circuit starting and ending at the same location, visiting a set of clients only once respecting the visiting time window \cite{urrutia:2010}.
+
+\section{Vehicle Routing Problem}
+
+The \ac{VRP} was defined by \citeonline{gilbert:1992} as a problem which consists in generate a minimum cost route in which each local is visited once by in which each place is visited only once, by a vehicle that part and return from the same place, the depot.
+
+The \ac{VRP} may be represented as a graph $G = (V,A)$ in which $V = \{v_0,v_1,\ldots,v_{|V|} \}$ is a set of vertices that represents the locals as the vertice $v_0$ represent the depot, $A = \{(i,j) : i\in V, j \in V, i \neq j \}$ is a set of arcs that represent the path of $i$ and $j$, and the associated a cost $c_{ij}$ which can represents travel cost.
+
+Be  $Q = \{ q_1, q_2, \ldots, q_{|Q|} \}$ a set of customers, $x_{ij}$  a variable which is equal to 1 when a arc is in a solution. The \ac{VRP} was described by \citeonline{laporte:2007} as:
+
+\begin{equation}\label{5}
+Minimize \sum_{[i,j] \in A} c_{ij}x_{ij}
+\end{equation}
+Subject \ to:
+\begin{equation}\label{6}
+\sum_{j \in V-\{v_0\}} x_{0j} = 2m
+\end{equation}
+\begin{equation}\label{7}
+\sum_{i<k} x_{ik} + \sum_{j>k} x_{kj} = 2 (k \in V-\{v_0\})
+\end{equation}
+\begin{equation}\label{8}
+\sum_{i \in Q, j \notin S or i \notin Q, j \in S } x_{ij} \geqslant 2b(Q) (Q \subset V-\{v_0\})
+\end{equation}
+\begin{equation}\label{9}
+x_{ij} = 0 or 1 (i,j \in V-{v_0})
+\end{equation}
+\begin{equation}\label{10}
+x_{0j} = 0, 1 or 2 (j \in V-{v_0})
+\end{equation}
+
+Where
+
+The objective function represented by~\ref{5} is minimize the total cost of the route. The constraint~\ref{6} define the degree of vertice  $v_0$ being that right side of the equation can be a constant if $m$ is known previously, or a variable if $m$ isn't known previously, the constraint~\ref{7} ensures that one edge arrives and another part of each edge and the constraint~\ref{8} is a lower bound of vehicles needed to attend each customer.
+
+\subsection{Vehicle Routing Problem With Time Window}
+
+The \ac{VRPTW} is a combinatorial optimization problem which has an objective determine a route of minimal cost. That problem was defined by \citeonline{desrochers:1992} as a generalization of \ac{VRP} whose a service has a Time Window that defines the upper and lowers bound to beginning the service.
+
+
+The \ac{VRPTW} was represented by \citeonline{desrochers:1992} as a graph $G = (V,A)$ in which $V = \{v_0,v_1,\ldots,v_{|V|} \}$ is a set of vertices that represents the locals as the vertice $v_0$ represent the depot, and $A = \{(i,j) : i\in V, j \in V, i \neq j \}$ is a set of arcs. Associated to each arc $(i,j) \in A$ exist a cost $c_{ij}$ that represent travel cost. A variable $t_{i,j}$ representing a total time of service. A time window defined by $[e_i,l_i]$ in which $e_i$ is a lower bound and  $l_i$ is a upper bound to beginning the visit.
+
+Be $R = \{ r_1, r_2, \ldots, r_{|R|} \}$ a set of routes and $\delta_{ir}$ a constant with value $1$ if exists customers to be visited on the route and 0 otherwise. The \ac{VRPTW} was formulated mathematically by \citeonline{desrochers:1992} as:
+
+\begin{equation}\label{11}
+min \sum_{r \in R} c_rx_r
+\end{equation}
+subject \ to:
+\begin{equation}\label{12}
+\sum_{r \in R} \delta_{ir}x_r = 1, i \in V-{v_0}
+\end{equation}
+\begin{equation}\label{13}
+x_r \in \{ 0,1 \}, r \in R
+\end{equation}
+
+Where
+
+The equation \ref{11} represents the objective function of \ac{VRPTW}, defining that the sum of the costs of the arcs of a route must be minimal. The restriction \ref{12} defines that it is $ x_r $, a binary variable with value $1$ if the route $r$ is used and $0$ otherwise, and the decision variable \ref{13} defines the values that should be used.
